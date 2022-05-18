@@ -1,5 +1,6 @@
 package org.inu.recyclerview
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,9 @@ class MainActivity : AppCompatActivity() {
             TodoData("백준 문제 풀기",false),
             TodoData("RecyclerView 공부하기",false),
         )
+        val customDecoration = MainDecoration(10f, 10f, Color.GRAY)
+        recyclerView.addItemDecoration(customDecoration)
+
 
         recyclerView.adapter = MainAdapter(data)
         recyclerView.layoutManager = LinearLayoutManager(this)
