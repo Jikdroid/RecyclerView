@@ -11,7 +11,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
 
         app:layout_constraintBottom_toTopOf="@id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,12 +23,24 @@
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="목록 추가하기"
+        android:layout_marginVertical="24dp"
+        android:text="목록 추가"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/removeButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/removeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="목록 삭제"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@id/addButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/addButton"
+        app:layout_constraintTop_toTopOf="@id/addButton" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
