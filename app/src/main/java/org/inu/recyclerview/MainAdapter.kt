@@ -22,7 +22,7 @@ class MainAdapter(private val data: MutableList<TodoData>): RecyclerView.Adapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.todo.text = data[position].todo
         holder.done.isChecked = data[position].done
-        doneClick(holder.done,holder.bindingAdapterPosition)
+        doneClick(holder.done,position)
     }
 
     override fun getItemCount() = data.size
@@ -38,6 +38,7 @@ class MainAdapter(private val data: MutableList<TodoData>): RecyclerView.Adapter
         data.clear()
         data.addAll(newData)
         diffResult.dispatchUpdatesTo(this)
+        notifyItemRangeChanged(0,newData.size)
     }
 
 

@@ -88,7 +88,6 @@ class MainActivity : AppCompatActivity() {
                     if (!it.done) {
                         this.add(it)
                     }
-                    mainAdapter.notifyItemRangeChanged(data.indexOf(it),1)
                 }
             }
             mainAdapter.update(newData)
