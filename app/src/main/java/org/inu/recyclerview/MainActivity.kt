@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             TodoData("백준 문제 풀기",false),
             TodoData("RecyclerView 공부하기",false),
         )
-        val customDecoration = MainDecoration(10f, 10f, Color.GRAY)
+        val customDecoration = MainDecoration(10f, 30f, Color.GRAY)
         recyclerView.addItemDecoration(customDecoration)
 
 
