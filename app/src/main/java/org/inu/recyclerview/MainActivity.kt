@@ -22,28 +22,24 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.removeButton)
     }
 
-
     private lateinit var mainAdapter: MainAdapter
+
+    private lateinit var data:MutableList<TodoData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setData()
+        setRecyclerView()
+        setAddButton()
+        setRemoveButton()
 
-        setData().let {
-            setRecyclerView(it)
-            setAddButton(it)
-            setRemoveButton(it)
-        }
     }
 
 
-    private fun setData(): MutableList<TodoData> {
-        return mutableListOf(
-            TodoData("운동하기", false),
-            TodoData("샤워하기", false),
-            TodoData("백준 문제 풀기", false),
-            TodoData("RecyclerView 공부하기", false),
+    private fun setData() {
+        data = mutableListOf(
             TodoData("운동하기", false),
             TodoData("샤워하기", false),
             TodoData("백준 문제 풀기", false),
@@ -59,9 +55,11 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun setRecyclerView(data: MutableList<TodoData>) {
+    private fun setRecyclerView() {
         val customDecoration = MainDecoration(10f, 30f, Color.GRAY)
-        mainAdapter = MainAdapter(data)
+        mainAdapter = MainAdapter().apply {
+            update(data)
+        }
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
             addItemDecoration(customDecoration)
@@ -69,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAddButton(data: MutableList<TodoData>) {
+    private fun setAddButton() {
         addButton.setOnClickListener {
             val newData = mutableListOf<TodoData>().apply {
                 data.forEach{
@@ -77,11 +75,12 @@ class MainActivity : AppCompatActivity() {
                 }
                     add(TodoData("새롭게 추가된 데이터!",false))
             }
+            data = newData
             mainAdapter.update(newData)
         }
     }
 
-    private fun setRemoveButton(data: MutableList<TodoData>) {
+    private fun setRemoveButton() {
         removeButton.setOnClickListener {
             val newData = mutableListOf<TodoData>().apply {
                 data.forEach{
@@ -90,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+            data = newData
             mainAdapter.update(newData)
         }
     }

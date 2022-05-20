@@ -5,10 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-class MainAdapter(private val data: MutableList<TodoData>): RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+class MainAdapter: RecyclerView.Adapter<MainAdapter.ViewHolder>() {
+    private val asyncListDiffer = AsyncListDiffer(this, AsyncDiffCallback)
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val todo:TextView = view.findViewById(R.id.itemTextView)
         val done:CheckBox = view.findViewById(R.id.checkBox)
@@ -20,39 +22,31 @@ class MainAdapter(private val data: MutableList<TodoData>): RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.todo.text = data[position].todo
-        holder.done.isChecked = data[position].done
-        doneClick(holder.done,position)
+        println(position)
+        val content = asyncListDiffer.currentList[position]
+        holder.todo.text = content.todo
+        holder.done.isChecked = content.done
+        doneClick(holder.done,content)
     }
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = asyncListDiffer.currentList.size
 
-    private fun doneClick(done:CheckBox,position:Int){
+    private fun doneClick(done:CheckBox,content:TodoData){
         done.setOnClickListener {
-            data[position].done = done.isChecked
+            content.done = done.isChecked
         }
     }
 
-    fun update(newData: MutableList<TodoData>) {
-        val diffResult = DiffUtil.calculateDiff(ContentDiffUtil(data,newData))
-        data.clear()
-        data.addAll(newData)
-        diffResult.dispatchUpdatesTo(this)
-        notifyItemRangeChanged(0,newData.size)
-    }
+    fun update(newData: MutableList<TodoData>) = asyncListDiffer.submitList(newData)
 
 
-    class ContentDiffUtil(private val oldList: List<TodoData>, private val currentList: List<TodoData>) : DiffUtil.Callback() {
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == currentList[newItemPosition]
+    object AsyncDiffCallback : DiffUtil.ItemCallback<TodoData>() {
+        override fun areContentsTheSame(oldItem: TodoData, newItem: TodoData): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition].todo == currentList[newItemPosition].todo
+        override fun areItemsTheSame(oldItem: TodoData, newItem: TodoData): Boolean {
+            return oldItem.todo == newItem.todo
         }
-
-        override fun getOldListSize(): Int = oldList.size
-
-        override fun getNewListSize(): Int = currentList.size
     }
 }
