@@ -1,10 +1,18 @@
 package org.inu.recyclerview
 
+import android.animation.Animator
+import android.animation.AnimatorInflater
+import android.animation.AnimatorListenerAdapter
 import android.graphics.Color
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.BounceInterpolator
 import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -43,15 +51,6 @@ class MainActivity : AppCompatActivity() {
             TodoData("운동하기", false),
             TodoData("샤워하기", false),
             TodoData("백준 문제 풀기", false),
-            TodoData("RecyclerView 공부하기", false),
-            TodoData("운동하기", false),
-            TodoData("샤워하기", false),
-            TodoData("백준 문제 풀기", false),
-            TodoData("RecyclerView 공부하기", false),
-            TodoData("운동하기", false),
-            TodoData("샤워하기", false),
-            TodoData("백준 문제 풀기", false),
-            TodoData("RecyclerView 공부하기", false),
         )
     }
 
@@ -64,6 +63,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             addItemDecoration(customDecoration)
             adapter = mainAdapter
+            itemAnimator = MainItemAnimator(this@MainActivity)  // itemAnimator setting
         }
     }
 

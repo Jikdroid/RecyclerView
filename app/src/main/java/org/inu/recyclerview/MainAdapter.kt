@@ -3,6 +3,7 @@ package org.inu.recyclerview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -13,7 +14,6 @@ class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallba
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val todo:TextView = view.findViewById(R.id.itemTextView)
         val done:CheckBox = view.findViewById(R.id.checkBox)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,6 +21,7 @@ class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallba
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.translate)
         val content = currentList[position]
         holder.todo.text = content.todo
         holder.done.isChecked = content.done
