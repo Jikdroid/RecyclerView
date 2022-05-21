@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     private fun setRecyclerView() {
         val customDecoration = MainDecoration(10f, 30f, Color.GRAY)
         mainAdapter = MainAdapter().apply {
-            update(data)
+            submitList(data)
         }
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                     add(TodoData("새롭게 추가된 데이터!",false))
             }
             data = newData
-            mainAdapter.update(newData)
+            mainAdapter.submitList(newData)
         }
     }
 
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             data = newData
-            mainAdapter.update(newData)
+            mainAdapter.submitList(newData)
         }
     }
 }
