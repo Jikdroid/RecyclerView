@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallback) {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -34,6 +36,14 @@ class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallba
         done.setOnClickListener {
             content.done = done.isChecked
         }
+    }
+
+    // 현재 선택된 데이터와 드래그한 위치에 있는 데이터를 교환
+    fun swapData(fromPos: Int, toPos: Int) {
+        var swapList = listOf<TodoData>()
+        swapList = swapList.plus(currentList)
+        Collections.swap(swapList, fromPos, toPos)
+        submitList(swapList)
     }
 
     object AsyncDiffCallback : DiffUtil.ItemCallback<TodoData>() {

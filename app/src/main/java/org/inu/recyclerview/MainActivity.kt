@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
             adapter = mainAdapter
             itemAnimator = MainItemAnimator(this@MainActivity)  // itemAnimator setting
         }
+        ItemTouchHelper(MainItemHelper(mainAdapter)).attachToRecyclerView(recyclerView)
     }
 
     private fun setAddButton() {
