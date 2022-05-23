@@ -60,24 +60,33 @@ class MainActivity : AppCompatActivity() {
         mainAdapter = MainAdapter().apply {
             submitList(data)
         }
+        val helperCallBack = MainItemHelper(mainAdapter).apply {
+            setClamp((resources.displayMetrics.widthPixels.toFloat() / 4)-15f)
+        }
+
+        ItemTouchHelper(helperCallBack).attachToRecyclerView(recyclerView)
+
         with(recyclerView) {
             layoutManager = LinearLayoutManager(this@MainActivity)
             addItemDecoration(customDecoration)
             adapter = mainAdapter
             itemAnimator = MainItemAnimator(this@MainActivity)  // itemAnimator setting
         }
-        ItemTouchHelper(MainItemHelper(mainAdapter)).attachToRecyclerView(recyclerView)
+
+        recyclerView.setOnTouchListener { v, event ->
+            helperCallBack.removePreviousClamp(recyclerView)
+            false
+        }
     }
 
     private fun setAddButton() {
         addButton.setOnClickListener {
             val newData = mutableListOf<TodoData>().apply {
-                data.forEach{
+                mainAdapter.currentList.forEach{
                     this.add(it)
                 }
                     add(TodoData("새롭게 추가된 데이터!",false))
             }
-            data = newData
             mainAdapter.submitList(newData)
         }
     }
@@ -85,13 +94,12 @@ class MainActivity : AppCompatActivity() {
     private fun setRemoveButton() {
         removeButton.setOnClickListener {
             val newData = mutableListOf<TodoData>().apply {
-                data.forEach{
+                mainAdapter.currentList.forEach{
                     if (!it.done) {
                         this.add(it)
                     }
                 }
             }
-            data = newData
             mainAdapter.submitList(newData)
         }
     }

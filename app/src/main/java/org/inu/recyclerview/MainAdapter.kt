@@ -6,16 +6,18 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallback) {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val todo:TextView = view.findViewById(R.id.itemTextView)
         val done:CheckBox = view.findViewById(R.id.checkBox)
+        val remove:TextView = view.findViewById(R.id.tvRemove)
+        val swipeView:ConstraintLayout = view.findViewById(R.id.swipe_view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +30,10 @@ class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallba
         holder.todo.text = content.todo
         holder.done.isChecked = content.done
         doneClick(holder.done,content)
+        holder.remove.setOnClickListener {
+            holder.swipeView.animate().x(0f).setDuration(100L).start()
+            removeData(holder.bindingAdapterPosition)   // adapter 에서의 position
+        }
     }
 
     override fun getItemCount() = currentList.size
@@ -44,6 +50,13 @@ class MainAdapter: ListAdapter<TodoData, MainAdapter.ViewHolder>(AsyncDiffCallba
         swapList = swapList.plus(currentList)
         Collections.swap(swapList, fromPos, toPos)
         submitList(swapList)
+    }
+
+    private fun removeData(position:Int){
+        var removedList = mutableListOf<TodoData>()
+        removedList = removedList.plus(currentList) as MutableList<TodoData>
+        removedList.removeAt(position)
+        submitList(removedList)
     }
 
     object AsyncDiffCallback : DiffUtil.ItemCallback<TodoData>() {
