@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/82105/Desktop/RecyclerView/RecyclerViewFundamentals-Starter/app/src/main/res/drawable/ic_sleep_active.xml" value="0.1665" />
         <entry key="..\:/Users/82105/Desktop/RecyclerView/RecyclerViewFundamentals-Starter/app/src/main/res/layout/fragment_sleep_tracker.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/82105/Desktop/RecyclerView/RecyclerViewFundamentals-Starter/app/src/main/res/layout/list_item_sleep_night.xml" value="0.2526041666666667" />
         <entry key="..\:/Users/82105/Desktop/RecyclerView/RecyclerViewFundamentals-Starter/app/src/main/res/layout/text_item_view.xml" value="0.189453125" />
       </map>
     </option>
