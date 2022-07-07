@@ -59,4 +59,7 @@
 
     <!--  detail  -->
     <string name="close">Close</string>
+
+    <!-- header -->
+    <string name="header_text">Sleep Results</string>
 </resources>
